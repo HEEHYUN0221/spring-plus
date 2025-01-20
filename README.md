@@ -67,6 +67,7 @@ Lv3 - 13. 대용량 데이터 처리
 </details>
 
 <details>
+  <summary>Lv4</summary>
   Lv4. Kotlin 적용하기
 
   Lv4 - 14. Entity 및 Repository CRUD를 Kotlin으로 리팩토링
