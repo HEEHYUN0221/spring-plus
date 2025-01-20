@@ -18,7 +18,7 @@ import org.springframework.security.web.servletapi.SecurityContextHolderAwareReq
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-  private final JwtFilter jwtFilter;  //필터를 bean으로 드
+  private final JwtFilter jwtFilter;  //필터를 bean으로 등록해줘야 오류가 나지 않으니 명심할 것
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -31,8 +31,8 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)  // .csrf().disable() 방식은 더 이상 사용 안함.
         .httpBasic(AbstractHttpConfigurer::disable) // BasicAuthenticationFilter 비활성화
         .formLogin(AbstractHttpConfigurer::disable) // UsernamePasswordAuthenticationFilter, DefaultLoginPageGeneratingFilter 비활성화
-        .addFilterBefore(jwtFilter, SecurityContextHolderAwareRequestFilter.class)
-        .authorizeHttpRequests(auth -> auth
+        .addFilterBefore(jwtFilter, SecurityContextHolderAwareRequestFilter.class) // jwtFilter > SecurityContextHolderAwareRequestFilter 순서로 동작
+        .authorizeHttpRequests(auth -> auth //역할별 허용 URL 작성하는 부분
             .requestMatchers("/auth/**").permitAll()
             .requestMatchers("/admin/users/**").hasRole("ADMIN")
             .requestMatchers("/**").hasRole("USER")
