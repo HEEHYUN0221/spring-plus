@@ -10,8 +10,8 @@ Lv1 - 1. 코드 개선 퀴즈 - @Transactional의 이해
 
 Lv1 - 2. JWT의 이해
 
-- User 테이블에 nickname 추가
-- JWT에 nickname 추가
+- User 테이블에 nickname 추가했다.
+- JWT에 nickname 추가했다.
 
 Lv1 - 3. AOP의 이해
 
@@ -24,7 +24,50 @@ Lv1 - 4. 테스트 코드 퀴즈 - 컨트롤러 테스트의 이해
 
 Lv1 - 5. 코드 개선 퀴즈 - JPA의 이해
 
-- 할일 검색 시 weather, 수정일 기준 조회 내림차순을 추가
-- Jquery를 사용하여 해당 조건 조회하도록 수정
+- 할일 검색 시 weather, 수정일 기준 조회 내림차순 기능을 추가했다.
 
+</details>
+
+<details>
+  <summary>Lv2</summary>
+Lv2 - 1. JPA Cascade
+
+- 할 일을 새로 저장할 시, 할일을 생성한 유저가 담당자로 자동 등록 될 수 있도록 수정해야 한다.
+- cascade = CascadeType.PERSIST 옵션을 지정했다.
+
+Lv2 - 2. N+1
+
+- getComments() 의 N+1 문제가 발생했다.
+- 해당 메소드와 관련한 쿼리문을 Fetch Join을 통해 변경해 N+1 문제를 해소했다.
+
+
+Lv2 - 3. QueryDSL
+
+- getTodo() 기능을 QueryDSL으로 변경했다.
+- (2025.01.20 추가) N+1문제 발생으로 fetchJoin을 추가했다.
+
+Lv2 - 4. Spring Security
+
+- 기존 Filter와 Argument Resolver를 사용하던 코드들을 Spring Security로 변경했다.
+  
+</details>
+
+<details>
+<summary>Lv3</summary>
+Lv3 - 10. QueryDSL을 사용하여 검색 기능 만들기
+
+- 일정 검색 기능(제목, 생성일 범위, 닉네임)을 추가했다.
+- 해당 기능으로 일정을 검색하면 해당 일정의 제목, 담당자 수, 댓글 개수를 볼 수 있다.
+
+Lv3 - 11. Transcation 심화
+
+Lv3 - 12. AWS 활용 마스터
+
+Lv3 - 13. 대용량 데이터 처리
+</details>
+
+<details>
+  Lv4. Kotlin 적용하기
+
+  Lv4 - 14. Entity 및 Repository CRUD를 Kotlin으로 리팩토링
 </details>
