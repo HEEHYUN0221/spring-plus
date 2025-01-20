@@ -5,13 +5,12 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.client.WeatherClient;
 import org.example.expert.domain.common.dto.AuthUser;
-import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
+import org.example.expert.domain.todo.dto.response.TodoSearchResponse;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
-import org.example.expert.domain.todo.repository.TodoRepositoryCustom;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.springframework.data.domain.Page;
@@ -71,5 +70,25 @@ public class TodoService {
 
     return new TodoResponse(todo.getId(), todo.getTitle(), todo.getContents(), todo.getWeather(),
         new UserResponse(user.getId(), user.getEmail()), todo.getCreatedAt(), todo.getModifiedAt());
+  }
+
+  public Page<TodoSearchResponse> getSearchTodo(int page, int size, String title, LocalDate start, LocalDate end, String managerName) {
+
+    Pageable pageable = PageRequest.of(page - 1, size);
+
+    LocalDateTime starttime = LocalDateTime.of(1980, 1, 1, 0, 0, 0);
+    LocalDateTime endtime = LocalDateTime.now();
+
+    if (!(start == null)) {
+      starttime = start.atStartOfDay();
+    }
+
+    if (!(end == null)) {
+      endtime = end.atTime(23, 59, 59);
+    }
+
+    Page<TodoSearchResponse> todoSearchList = todoRepository.getSearchResponse(pageable, title, starttime, endtime, managerName);
+
+    return todoSearchList;
   }
 }
