@@ -15,7 +15,11 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
   private final JPAQueryFactory queryFactory;
 
   public Todo getTodo(Long todoId) {
-    Todo getTodo = queryFactory.selectFrom(todo).where(todo.id.eq(todoId)).fetchOne();
+    Todo getTodo = queryFactory.selectFrom(todo)
+        .leftJoin(todo.user)
+        .fetchJoin()
+        .where(todo.id.eq(todoId))
+        .fetchOne();
     if(getTodo==null) {
       throw new InvalidRequestException("Todo not found");
     }
