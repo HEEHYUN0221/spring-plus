@@ -1,5 +1,16 @@
 package org.example.expert.domain.todo.controller;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.time.LocalDateTime;
+import org.example.expert.config.JwtUtil;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
@@ -12,16 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(TodoController.class)
+//@Import(TestSecurityConfig.class)
+//@ActiveProfiles("test")
+@WebMvcTest(value = TodoController.class)
 class TodoControllerTest {
 
     @Autowired
@@ -30,7 +37,11 @@ class TodoControllerTest {
     @MockBean
     private TodoService todoService;
 
+    @MockBean
+    private JwtUtil jwtUtil;
+
     @Test
+    @WithMockCustomUser
     void todo_단건_조회에_성공한다() throws Exception {
         // given
         long todoId = 1L;
@@ -59,6 +70,7 @@ class TodoControllerTest {
     }
 
     @Test
+    @WithMockCustomUser
     void todo_단건_조회_시_todo가_존재하지_않아_예외가_발생한다() throws Exception {
         // given
         long todoId = 1L;
@@ -73,5 +85,15 @@ class TodoControllerTest {
                 .andExpect(jsonPath("$.status").value(HttpStatus.valueOf(400).name()))
                 .andExpect(jsonPath("$.code").value(HttpStatus.valueOf(400).value()))
                 .andExpect(jsonPath("$.message").value("Todo not found"));
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE_USE, ElementType.METHOD})
+    @WithSecurityContext(factory = WithMockCustomUserSecurityContextFactory.class)
+    public @interface WithMockCustomUser{
+        long id() default 1L;
+        String username() default "iuiu";
+        UserRole role() default UserRole.USER;
+        String email() default "email";
     }
 }
