@@ -1,5 +1,8 @@
 # SPRING PLUS
 
+TIL
+[jwt+Security 적용 이후 테스트 코드 에러 발생](https://heehyun0221.tistory.com/150)
+
 <details>
   <summary>Lv1</summary>
 Lv1 - 1. 코드 개선 퀴즈 - @Transactional의 이해
