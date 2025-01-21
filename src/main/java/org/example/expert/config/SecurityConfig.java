@@ -33,6 +33,7 @@ public class SecurityConfig {
         .formLogin(AbstractHttpConfigurer::disable) // UsernamePasswordAuthenticationFilter, DefaultLoginPageGeneratingFilter 비활성화
         .addFilterBefore(jwtFilter, SecurityContextHolderAwareRequestFilter.class) // jwtFilter > SecurityContextHolderAwareRequestFilter 순서로 동작
         .authorizeHttpRequests(auth -> auth //역할별 허용 URL 작성하는 부분
+            .requestMatchers("/healthz").permitAll()
             .requestMatchers("/auth/**").permitAll()
             .requestMatchers("/admin/users/**").hasRole("ADMIN")
             .requestMatchers("/**").hasRole("USER")
