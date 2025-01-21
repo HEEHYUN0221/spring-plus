@@ -32,10 +32,25 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew bootJar
 
-      - name: Copy dockerfile
-        run: |
-          cp dockerfile ./build/libs/
-          cd ./build/libs/
+      - name: Create app directory
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            mkdir -p ~/app
+
+      - name: Copy JAR and Dockerfile to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "./build/libs/*.jar,dockerfile"
+          target: "~/app"
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
@@ -44,9 +59,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          source: "./build/libs/"
           script: |
             cd ~/app
+            mv dockerfile Dockerfile
             docker stop my-app || true
             docker rm my-app || true
             docker build -t my-app .
