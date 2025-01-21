@@ -32,9 +32,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew bootJar
 
-      - name: Copy Dockerfile
+      - name: Copy dockerfile
         run: |
-          cp Dockerfile ./build/libs/
+          cp dockerfile ./build/libs/
           cd ./build/libs/
 
       - name: Deploy to EC2
