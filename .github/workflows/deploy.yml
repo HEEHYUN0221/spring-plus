@@ -22,11 +22,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Make application-secret.properties
+      - name: Make application.yml
         run: |
           cd ./src/main/resources
-          touch ./application-secret.yml                                    
-          echo "${{ secrets.YML_SECRET }}" > ./application-secret.yml
+          touch ./application.yml                                    
+          echo "${{ secrets.YML_SECRET }}" > ./application.yml
         shell: bash
 
       - name: gradlew bootJar
