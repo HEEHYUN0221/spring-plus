@@ -25,7 +25,7 @@ jobs:
       - name: Make application-secret.properties
         run: |
           cd ./src/main/resources
-          touch ./application-secret.properties                                      
+          touch ./application-secret.yml                                    
           echo "${{ secrets.YML_SECRET }}" > ./application-secret.yml
         shell: bash
 
