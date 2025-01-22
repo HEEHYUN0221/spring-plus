@@ -6,9 +6,8 @@ TIL
 
 [aws에 배포하기 with GitHubAction](https://heehyun0221.tistory.com/147)
 
-[S3 기능으로 유저 이미지 업로드하기]()
+[S3 기능으로 유저 이미지 업로드하기](https://heehyun0221.tistory.com/152)
 
-[S3의 Presigned URL]()
 
 
 
