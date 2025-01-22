@@ -53,15 +53,6 @@ public class UserImageService {
       user.setImagePath(objectKey);
       userRepository.save(user);
 
-      //presigned URL로 반환
-      //1. 한사람에 하나만 프로필 이미지를 저장하게 할건지
-      //2. 한사람에 여러개 프로필 이미지를 저장하고 메인 프로필 이미지를 저장하게 할건지(이건 URL을 리스트화하고,
-      //   Map이나 Set으로 저장해서 순서도 수정할 수 있게하고 그러면 좋을거같은데 이건 좀 어려울듯.
-      //3. 왜 POST 할때 뱉는 presignedURL과 GET 할때 뱉는 presignedURL이 달라야하는걸까?
-      // 메소드 이름 최적화하고 V
-      // 1번 방법으로 할려면 삭제가 동작해야하니까 삭제쪽 건드려야함. V > 성공
-      // 그 후에 S3 구성한거랑 동작방식 TIL 정리.
-
       return "이미지 저장 성공";
     } catch (Exception e) {
       throw new RuntimeException("이미지 저장 실패");
