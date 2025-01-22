@@ -2,6 +2,8 @@
 
 TIL
 
+[QueryDSL과 JPA 같이 사용하기](https://heehyun0221.tistory.com/138)
+
 [Spring Security 적용](https://heehyun0221.tistory.com/139)
 
 [jwt+Security 적용 이후 테스트 코드 에러 발생](https://heehyun0221.tistory.com/150)
