@@ -58,4 +58,4 @@ jobs:
                sudo kill -9 $pid
               fi
              done
-             echo "nohup java -jar ~/*.jar > ~/app.log 2>&1 &" | at now
+             nohup java -jar ~/*.jar > ~/app.log 2>&1 &
