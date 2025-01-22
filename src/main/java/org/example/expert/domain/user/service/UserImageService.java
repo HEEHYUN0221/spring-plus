@@ -47,8 +47,8 @@ public class UserImageService {
       String objectKey = folderName + uniqueFileName;
 
       ObjectMetadata metadata = new ObjectMetadata();
-      metadata.setContentType(file.getContentType());// get image -> presigned URL
-      metadata.setContentLength(file.getSize());// 폴더만들기   bucket/user/{userId}/{imageFilename}
+      metadata.setContentType(file.getContentType());
+      metadata.setContentLength(file.getSize());
       amazonS3Client.putObject(bucket, objectKey, file.getInputStream(), metadata);
       user.setImagePath(objectKey);
       userRepository.save(user);
