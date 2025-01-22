@@ -2,6 +2,8 @@
 
 TIL
 
+[Spring Security 적용](https://heehyun0221.tistory.com/139)
+
 [jwt+Security 적용 이후 테스트 코드 에러 발생](https://heehyun0221.tistory.com/150)
 
 [aws에 배포하기 with GitHubAction](https://heehyun0221.tistory.com/147)
