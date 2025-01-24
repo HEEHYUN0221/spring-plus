@@ -1,9 +1,7 @@
 package org.example.expert.domain.todo.repository;
 
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import org.example.expert.domain.todo.entity.Todo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +19,5 @@ public interface TodoRepository extends JpaRepository<Todo, Long>,TodoRepository
       "ORDER BY t.modifiedAt DESC")
   Page<Todo> findAllByWeatherAndModifiedAtOrderByModifiedAtDesc(Pageable pageable, @Param("weather") String weather,
       @Param("starttime") LocalDateTime starttime, @Param("endtime") LocalDateTime endtime);
-
 
 }
