@@ -59,7 +59,7 @@ public class ManagerService {
       Manager savedManagerUser = managerRepository.save(newManagerUser);
       logRepository.save(log);
       return new ManagerSaveResponse(savedManagerUser.getId(),
-          new UserResponse(managerUser.getId(), managerUser.getEmail()));
+          new UserResponse(managerUser.getId(), managerUser.getEmail(), user.getUsername()));
 
     }
     catch (RuntimeException e) {
@@ -80,7 +80,8 @@ public class ManagerService {
     for (Manager manager : managerList) {
       User user = manager.getUser();
       dtoList.add(
-          new ManagerResponse(manager.getId(), new UserResponse(user.getId(), user.getEmail())));
+          new ManagerResponse(manager.getId(), new UserResponse(user.getId(), user.getEmail(),
+              user.getUsername())));
     }
     return dtoList;
   }

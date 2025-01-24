@@ -46,6 +46,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.261'
+    implementation 'net.datafaker:datafaker:1.9.0'
+
 
     // bcrypt
     implementation 'at.favre.lib:bcrypt:0.10.2'

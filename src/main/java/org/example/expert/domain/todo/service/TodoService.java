@@ -37,7 +37,7 @@ public class TodoService {
     Todo savedTodo = todoRepository.save(newTodo);
 
     return new TodoSaveResponse(savedTodo.getId(), savedTodo.getTitle(), savedTodo.getContents(),
-        weather, new UserResponse(user.getId(), user.getEmail()));
+        weather, new UserResponse(user.getId(), user.getEmail(), user.getUsername()));
   }
 
   public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDate start,
@@ -59,7 +59,7 @@ public class TodoService {
         weather, starttime, endtime);
 
     return todos.map(todo -> new TodoResponse(todo.getId(), todo.getTitle(), todo.getContents(),
-        todo.getWeather(), new UserResponse(todo.getUser().getId(), todo.getUser().getEmail()),
+        todo.getWeather(), new UserResponse(todo.getUser().getId(), todo.getUser().getEmail(),todo.getUser().getUsername()),
         todo.getCreatedAt(), todo.getModifiedAt()));
   }
 
@@ -69,7 +69,7 @@ public class TodoService {
     User user = todo.getUser();
 
     return new TodoResponse(todo.getId(), todo.getTitle(), todo.getContents(), todo.getWeather(),
-        new UserResponse(user.getId(), user.getEmail()), todo.getCreatedAt(), todo.getModifiedAt());
+        new UserResponse(user.getId(), user.getEmail(), user.getUsername()), todo.getCreatedAt(), todo.getModifiedAt());
   }
 
   public Page<TodoSearchResponse> getSearchTodo(int page, int size, String title, LocalDate start, LocalDate end, String managerName) {
