@@ -19,6 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
       + " ORDER BY u.id ASC")
   Page<UserResponse> findAllByUsername(Pageable pageable, String username);
 
+//  @Query("SELECT new org.example.expert.domain.user.dto.response.UserResponse(u.id, u.email, u.username)"
+//      + " FROM User u WHERE (:email IS NULL OR u.email LIKE CONCAT('%','1','%')  )"
+//      + " ORDER BY u.id ASC")
+//  Page<UserResponse> findAllByUsername(Pageable pageable, String email);
 
   //nooffset 기반
 //  @Query("SELECT new org.example.expert.domain.user.dto.response.UserResponse(u.id, u.email, u.username)"

@@ -12,7 +12,7 @@ import org.example.expert.domain.user.enums.UserRole;
 @Entity
 @NoArgsConstructor
 @Table(name = "users",
-    indexes = @Index(name = "idx_user_username"
+    indexes = @Index(name = "idx_user_name"
         , columnList = "username"))
 public class User extends Timestamped {
 
