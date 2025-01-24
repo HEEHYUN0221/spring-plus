@@ -82,7 +82,12 @@ Lv3 - 11. Transcation 심화
 
 Lv3 - 12. AWS 활용 마스터
 
+- TIL에 과정 포함
+
 Lv3 - 13. 대용량 데이터 처리
+
+- TIL에 과정 및 조회 시간 포함
+
 </details>
 
 <details>
@@ -90,4 +95,7 @@ Lv3 - 13. 대용량 데이터 처리
   Lv4. Kotlin 적용하기
 
   Lv4 - 14. Entity 및 Repository CRUD를 Kotlin으로 리팩토링
+
+
+  
 </details>
