@@ -55,7 +55,7 @@ class UserService(
     }
 
 //    fun getAllUser(lastUserId: Long?, size: Int, username: String?): List<UserResponse?>? {
-//        return userRepository!!.findAllByUsername(lastUserId, size, username)
+//        return userRepository.findAllByUsername(lastUserId, size, username)
 //    }
 
     companion object {
