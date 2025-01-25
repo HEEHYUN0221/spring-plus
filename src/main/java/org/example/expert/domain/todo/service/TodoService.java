@@ -44,23 +44,16 @@ public class TodoService {
       LocalDate end) {
     Pageable pageable = PageRequest.of(page - 1, size);
 
-    LocalDateTime starttime = LocalDateTime.of(1980, 1, 1, 0, 0, 0);
-    LocalDateTime endtime = LocalDateTime.now();
-
-    if (!(start == null)) {
-      starttime = start.atStartOfDay();
-    }
-
-    if (!(end == null)) {
-      endtime = end.atTime(23, 59, 59);
-    }
+    LocalDateTime starttime =
+        (start != null) ? start.atStartOfDay() : LocalDateTime.of(1980, 1, 1, 0, 0, 0);
+    LocalDateTime endtime = (end != null) ? end.atTime(23, 59, 59) : LocalDateTime.now();
 
     Page<Todo> todos = todoRepository.findAllByWeatherAndModifiedAtOrderByModifiedAtDesc(pageable,
         weather, starttime, endtime);
 
     return todos.map(todo -> new TodoResponse(todo.getId(), todo.getTitle(), todo.getContents(),
-        todo.getWeather(), new UserResponse(todo.getUser().getId(), todo.getUser().getEmail(),todo.getUser().getUsername()),
-        todo.getCreatedAt(), todo.getModifiedAt()));
+        todo.getWeather(), new UserResponse(todo.getUser().getId(), todo.getUser().getEmail(),
+        todo.getUser().getUsername()), todo.getCreatedAt(), todo.getModifiedAt()));
   }
 
   public TodoResponse getTodo(long todoId) {
@@ -69,26 +62,19 @@ public class TodoService {
     User user = todo.getUser();
 
     return new TodoResponse(todo.getId(), todo.getTitle(), todo.getContents(), todo.getWeather(),
-        new UserResponse(user.getId(), user.getEmail(), user.getUsername()), todo.getCreatedAt(), todo.getModifiedAt());
+        new UserResponse(user.getId(), user.getEmail(), user.getUsername()), todo.getCreatedAt(),
+        todo.getModifiedAt());
   }
 
-  public Page<TodoSearchResponse> getSearchTodo(int page, int size, String title, LocalDate start, LocalDate end, String managerName) {
+  public Page<TodoSearchResponse> getSearchTodo(int page, int size, String title, LocalDate start,
+      LocalDate end, String managerName) {
 
     Pageable pageable = PageRequest.of(page - 1, size);
 
-    LocalDateTime starttime = LocalDateTime.of(1980, 1, 1, 0, 0, 0);
-    LocalDateTime endtime = LocalDateTime.now();
+    LocalDateTime starttime =
+        (start != null) ? start.atStartOfDay() : LocalDateTime.of(1980, 1, 1, 0, 0, 0);
+    LocalDateTime endtime = (end != null) ? end.atTime(23, 59, 59) : LocalDateTime.now();
 
-    if (!(start == null)) {
-      starttime = start.atStartOfDay();
-    }
-
-    if (!(end == null)) {
-      endtime = end.atTime(23, 59, 59);
-    }
-
-    Page<TodoSearchResponse> todoSearchList = todoRepository.getSearchResponse(pageable, title, starttime, endtime, managerName);
-
-    return todoSearchList;
+    return todoRepository.getSearchResponse(pageable, title, starttime, endtime, managerName);
   }
 }
