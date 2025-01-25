@@ -13,7 +13,7 @@ import org.example.expert.domain.user.entity.User
 @Table(name = "todos")
 @Entity
 class Todo(
-    //이부분은 생성자 부분 java파일 37번째줄의
+    //생성자+ init() =  java파일 37번째줄
     var title: String,
     var contents: String,
     var weather: String,
