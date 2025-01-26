@@ -31,8 +31,5 @@ WORKDIR /app
 # 빌드 스테이지에서 생성된 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# application.yml 파일 복사
-COPY --from=build /app/src/main/resources/application.yml /app/application.yml
-
 # 애플리케이션 실행
 ENTRYPOINT ["java", "-jar", "app.jar"]
