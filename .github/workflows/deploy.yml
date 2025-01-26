@@ -92,22 +92,11 @@ jobs:
           echo "${{ secrets.YML_SECRET }}" > ./src/main/resources/application.yml
         shell: bash
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Build Docker image
+        run: docker build -t myapp:latest .
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: false
-          tags: myapp:latest
-          outputs: type=docker,dest=/tmp/myapp.tar
-
-#      - name: Build Docker image
-#        run: docker build -t myapp:latest .
-#
-#      - name: Save Docker image
-#        run: docker save myapp:latest | gzip > myapp.tar.gz
+      - name: Save Docker image
+        run: docker save myapp:latest | gzip > myapp.tar.gz
 
       - name: Copy Docker image to EC2
         uses: appleboy/scp-action@master
@@ -115,7 +104,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
-          source: "myapp.tar"
+          source: "myapp.tar.gz"
           target: "~/"
 
       - name: Deploy to EC2
@@ -125,7 +114,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker load < ~/myapp.tar
+            docker load < ~/myapp.tar.gz
             docker stop myapp-container || true
             docker rm myapp-container || true
             docker run -d --name myapp-container -p 8080:8080 myapp:latest
