@@ -1,13 +1,10 @@
 package org.example.expert.domain.todo.repository;
 
-import static org.example.expert.domain.comment.entity.QComment.comment;
 import static org.example.expert.domain.manager.entity.QManager.manager;
 import static org.example.expert.domain.todo.entity.QTodo.todo;
-import static org.example.expert.domain.user.entity.QUser.user;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,18 +50,39 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
   @Override
   public Page<TodoSearchResponse> getSearchResponse(Pageable pageable, String title,
       LocalDateTime starttime, LocalDateTime endtime, String managerName) {
+//    List<TodoSearchResponse> todos = queryFactory.select(
+//        Projections.constructor(
+//            TodoSearchResponse.class,
+//            todo,
+//            manager.id.countDistinct(),
+//            comment.id.countDistinct()
+//        )
+//    )
+//        .from(todo)
+//        .leftJoin(comment).on(comment.todo.id.eq(todo.id))
+//        .leftJoin(manager).on(manager.todo.id.eq(todo.id))
+//        .leftJoin(user).on(user.id.eq(manager.user.id))
+//        .where(
+//            likeTitle(title),
+//            todo.createdAt.between(starttime,endtime),
+//            likeManagerName(managerName)
+//        )
+//        .groupBy(todo.id)
+//        .orderBy(todo.createdAt.desc())
+//        .limit(pageable.getPageSize())
+//        .offset(pageable.getOffset())
+//        .fetch();
+
     List<TodoSearchResponse> todos = queryFactory.select(
-        Projections.constructor(
-            TodoSearchResponse.class,
-            todo,
-            manager.id.countDistinct(),
-            comment.id.countDistinct()
+            Projections.constructor(
+                TodoSearchResponse.class,
+                todo,
+                todo.managers.size(),
+                todo.comments.size()
+            )
         )
-    )
         .from(todo)
-        .leftJoin(comment).on(comment.todo.id.eq(todo.id))
-        .leftJoin(manager).on(manager.todo.id.eq(todo.id))
-        .leftJoin(user).on(user.id.eq(manager.user.id))
+        .join(todo.managers, manager)
         .where(
             likeTitle(title),
             todo.createdAt.between(starttime,endtime),
@@ -73,20 +91,42 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom{
         .groupBy(todo.id)
         .orderBy(todo.createdAt.desc())
         .limit(pageable.getPageSize())
-        .offset(pageable.getPageNumber())
+        .offset(pageable.getOffset())
         .fetch();
 
-    Long totalCount = Optional.ofNullable(queryFactory.select(Wildcard.count)
-        .from(todo)
-        .leftJoin(comment).on(comment.todo.id.eq(todo.id))
-        .leftJoin(manager).on(manager.todo.id.eq(todo.id))
-        .leftJoin(user).on(user.id.eq(manager.user.id))
-        .where(
-            likeTitle(title),
-            todo.createdAt.between(starttime,endtime),
-            likeManagerName(managerName)
-        ).fetchOne())
+//    Long totalCount = Optional.ofNullable(queryFactory.select(Wildcard.count)
+//            .from(todo)
+//            .where(
+//                likeTitle(title),
+//                todo.createdAt.between(starttime,endtime),
+//                likeManagerName(managerName)
+//            ).fetchOne())
+//        .orElse(0L);
+
+//    Long totalCount = Optional.ofNullable(queryFactory.select(todo.id.countDistinct())
+//        .from(todo)
+//        .leftJoin(comment).on(comment.todo.id.eq(todo.id))
+//        .leftJoin(manager).on(manager.todo.id.eq(todo.id))
+//        .leftJoin(user).on(user.id.eq(manager.user.id))
+//        .where(
+//            likeTitle(title),
+//            todo.createdAt.between(starttime,endtime),
+//            likeManagerName(managerName)
+//        )
+//            .fetchOne())
+//        .orElse(0L);
+
+    Long totalCount = Optional.ofNullable(queryFactory.select(todo.id.countDistinct())
+            .from(todo)
+            .join(todo.managers, manager)
+            .where(
+                likeTitle(title),
+                todo.createdAt.between(starttime,endtime),
+                likeManagerName(managerName)
+            )
+            .fetchOne())
         .orElse(0L);
+
     return new PageImpl<>(todos,pageable,totalCount);
   }
 
