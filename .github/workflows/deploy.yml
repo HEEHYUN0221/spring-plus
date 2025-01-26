@@ -65,15 +65,20 @@ name: Deploy
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
   pull_request:
     types:
       - closed
-
+    branches:
+      - main
 
 jobs:
+  your_job_name:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Your step
+        run: echo "This runs only when a PR is merged"
+
   deploy:
     runs-on: ubuntu-latest
     steps:
