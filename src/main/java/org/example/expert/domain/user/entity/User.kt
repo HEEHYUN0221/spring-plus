@@ -7,7 +7,6 @@ import org.example.expert.domain.common.dto.AuthUser
 import org.example.expert.domain.common.entity.Timestamped
 import org.example.expert.domain.user.enums.UserRole
 
-@Getter
 @Entity
 @NoArgsConstructor
 @Table(
@@ -32,14 +31,24 @@ class User(
 
     var imagePath: String? = null
 
-    constructor(id: Long, email: String, username: String, userRole: UserRole) : this()
+    constructor(id: Long, email: String, username: String, userRole: UserRole) : this() {
+        this.id = id
+        this.email = email
+        this.username = username
+        this.userRole = userRole
+    }
 
     constructor(
         email: String,
-        encodedPassword: String,
+        password: String,
         username: String,
         userRole: UserRole
-    ) : this()
+    ) : this() {
+        this.email = email
+        this.password = password
+        this.username = username
+        this.userRole = userRole
+    }
 
     fun changePassword(password: String) {
         this.password = password

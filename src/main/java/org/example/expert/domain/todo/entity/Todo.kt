@@ -8,22 +8,23 @@ import org.example.expert.domain.common.entity.Timestamped
 import org.example.expert.domain.manager.entity.Manager
 import org.example.expert.domain.user.entity.User
 
-@Getter
+
 @NoArgsConstructor
 @Table(name = "todos")
 @Entity
 class Todo(
-    //생성자+ init() =  java파일 37번째줄
-    var title: String,
-    var contents: String,
-    var weather: String,
+) : Timestamped() {
+
+    var title: String?=null
+    var contents: String?=null
+    var weather: String?=null
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(
         name = "user_id",
         nullable = false
-    ) val user: User,
+    )
+    var user: User?=null
 
-) : Timestamped() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
@@ -39,8 +40,12 @@ class Todo(
         orphanRemoval = true
     ) val managers: MutableList<Manager> = mutableListOf()
 
-    init {
-        managers.add(Manager(user, this))
+    constructor(title: String, contents: String, weather: String, user: User) : this() {
+        this.title=title
+        this.contents=contents
+        this.weather=weather
+        this.user=user
+        managers.add(Manager(user,this))
     }
 
 }
