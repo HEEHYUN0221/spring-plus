@@ -53,7 +53,8 @@
 #COPY --from=builder /app/build/libs/*.jar app.jar
 #ENTRYPOINT ["java", "-jar", "app.jar"]
 
-FROM amazoncorretto:17-alpine-jdk AS builder
+
+FROM amazoncorretto:17-alpine3.21-jdk AS builder
 
 WORKDIR /app
 
@@ -70,7 +71,7 @@ COPY src /app/src
 # 빌드 실행
 RUN ./gradlew build --no-daemon
 
-FROM amazoncorretto:17-alpine-jre
+FROM amazoncorretto:17-alpine3.21-jdk
 
 WORKDIR /app
 
