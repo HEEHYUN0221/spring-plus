@@ -37,14 +37,18 @@
 # Gradle 7.6 및 JDK 17 사용
 #FROM gradle:7.6-jdk17 AS build
 
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17 AS builder
+FROM amazoncorretto:17 AS builder
 
 WORKDIR /app
+COPY gradle /app/gradle
+COPY gradlew /app/
+COPY build.gradle /app/
+COPY settings.gradle /app/
+RUN ./gradlew build --no-daemon
 COPY . .
-RUN gradle build --no-daemon
 
-# 실행 단계
-#FROM openjdk:17-jdk-slim
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-alpine
+RUN ./gradlew build --no-daemon
+
+FROM amazoncorretto:17
 COPY --from=builder /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
