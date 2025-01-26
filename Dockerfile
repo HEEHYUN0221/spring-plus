@@ -46,5 +46,5 @@ RUN gradle build --no-daemon
 # 실행 단계
 #FROM openjdk:17-jdk-slim
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-alpine
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
