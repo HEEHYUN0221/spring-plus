@@ -91,11 +91,11 @@ jobs:
           echo "${{ secrets.YML_SECRET }}" > ./src/main/resources/application.yml
         shell: bash
 
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x ./gradlew
-#
-#      - name: gradlew bootJar
-#        run: ./gradlew bootJar
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: gradlew bootJar
+        run: ./gradlew bootJar
 
 #      - name: Build Docker image
 #        run: docker build -t myapp:latest .
