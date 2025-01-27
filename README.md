@@ -25,8 +25,8 @@ Lv1 - 1. 코드 개선 퀴즈 - @Transactional의 이해
 
 Lv1 - 2. JWT의 이해
 
-- User 테이블에 nickname 추가했다.
-- JWT에 nickname 추가했다.
+- User 테이블에 username 추가했다.
+- JWT에 username 추가했다.
 
 Lv1 - 3. AOP의 이해
 
@@ -60,6 +60,7 @@ Lv2 - 3. QueryDSL
 
 - getTodo() 기능을 QueryDSL으로 변경했다.
 - (2025.01.20 추가) N+1문제 발생으로 fetchJoin을 추가했다.
+
 
 Lv2 - 4. Spring Security
 
@@ -96,6 +97,7 @@ Lv3 - 13. 대용량 데이터 처리
 
   Lv4 - 14. Entity 및 Repository CRUD를 Kotlin으로 리팩토링
 
+  - Todo Entity, User Entity, UserRepository, UserAdminService, UserService를 Kotlin으로 리팩토링 했습니다.
 
   
 </details>
