@@ -103,9 +103,6 @@ jobs:
 #      - name: Save Docker image
 #        run: docker save myapp:latest | gzip > myapp.tar.gz
 
-      - name: List files in build directory
-        run: ls -al ./build/libs
-
       - name: copy jar to server
         uses: appleboy/scp-action@master
         with:
@@ -133,6 +130,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
+#            docker load < ~/myapp.tar.gz
             docker stop myapp-container || true
             docker rm myapp-container || true
             docker run -d --name myapp-container -p 8080:8080 myapp:latest
