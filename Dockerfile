@@ -55,26 +55,13 @@
 
 
 FROM amazoncorretto:17-alpine3.21-jdk AS builder
-
 WORKDIR /app
-
-# 빌드에 필요한 파일들을 먼저 복사
 COPY gradle /app/gradle
 COPY gradlew build.gradle settings.gradle /app/
-
-# gradlew에 실행 권한 부여
 RUN chmod +x ./gradlew
-
-# 소스 코드 복사
 COPY src /app/src
-
-# 빌드 실행
 RUN ./gradlew build --no-daemon
-
 FROM amazoncorretto:17-alpine3.21-jdk
-
 WORKDIR /app
-
 COPY --from=builder /app/build/libs/*.jar app.jar
-
 ENTRYPOINT ["java", "-jar", "app.jar"]

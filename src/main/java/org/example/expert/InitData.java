@@ -29,7 +29,7 @@
 //
 //    Faker faker = new Faker();
 //    for(int i = 0; i<1_000_000;i++){
-//      String fullName = faker.name().firstName();
+//      String fullName = faker.name().firstName()+faker.name().lastName()+faker.dog().name();
 //      String email = fullName.toLowerCase()+ i + "@gmail.com";
 //      String password = "1234";
 //      UserRole userRole = UserRole.valueOf("USER");
