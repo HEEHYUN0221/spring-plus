@@ -130,7 +130,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
-#            docker load < ~/myapp.tar.gz
             docker stop myapp-container || true
             docker rm myapp-container || true
             docker run -d --name myapp-container -p 8080:8080 myapp:latest
